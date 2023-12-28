@@ -1,0 +1,28 @@
+/* Write your CSS here */
+.image {
+  height: 300px;
+  width: 300px;
+}
+
+.bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px;
+}
+
+.form {
+  margin-bottom: 15px;
+}
+
+.button {
+  padding: 10px;
+  background-color: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 2px;
+}
+
+.main-bg {
+  margin: 10px;
+}
