@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import './index.css'
 import {v4 as uuidv4} from 'uuid'
+import {formatDistanceToNow} from 'date-fns'
 import CommentItem from '../CommentItem/index'
 
 const initialContainerBackgroundClassNames = [
@@ -35,11 +36,15 @@ class Comments extends Component {
 
   onAddButton = () => {
     const {commentListItems, name, description, isActive} = this.state
+    const randomIndex = Math.floor(Math.random() * 7)
+    const styleBackground = initialContainerBackgroundClassNames[randomIndex]
     const newListItem = {
       id: uuidv4(),
       Uname: name,
       Udescription: description,
       IsActive: isActive,
+      color: styleBackground,
+      date: formatDistanceToNow(new Date()),
     }
     this.setState(prevState => ({
       count: prevState.count + 1,
@@ -48,15 +53,6 @@ class Comments extends Component {
       description: '',
     }))
   }
-
-  //   islikeBtnClicked = eachId => {
-  //     const {commentListItems} = this.state
-  //     const {IsActive} = commentListItems
-  //     this.setState(prevState => ({
-  //       IsActive: !prevState.IsActive,
-  //     }))
-  //     console.log(IsActive)
-  //   }
 
   islikeBtnClicked = eachId => {
     this.setState(prevState => {
@@ -68,6 +64,18 @@ class Comments extends Component {
       })
 
       return {commentListItems: updatedList}
+    })
+  }
+
+  isDeleteButtonClikced = eachId => {
+    this.setState(prevState => {
+      const deletedList = prevState.commentListItems.filter(
+        item => item.id !== eachId,
+      )
+      return {
+        commentListItems: deletedList,
+        count: prevState.count - 1,
+      }
     })
   }
 
@@ -116,6 +124,8 @@ class Comments extends Component {
             <CommentItem
               eachListItem={eachListItem}
               islikeBtnClicked={this.islikeBtnClicked}
+              isDeleteButtonClikced={this.isDeleteButtonClikced}
+              key={eachListItem.id}
             />
           ))}
         </ul>
